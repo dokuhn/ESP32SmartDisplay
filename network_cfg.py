@@ -1,0 +1,3 @@
+
+SSID = 'YourSSID'
+PASS = 'YourSuperSecretPassword'
