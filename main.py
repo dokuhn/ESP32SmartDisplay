@@ -13,7 +13,7 @@ cols = 10
 n = (rows * cols)                # set the number of pixels in your strip
 
 pin = Pin(0, Pin.OUT)            # set GPIO0 to output to drive NeoPixels
-np = NeoPixel(pin, n)            # create NeoPixel driver on GPIO0 for n pixels
+np = NeoPixel(pin, n)            # create NeoPixel driver on pin for n pixels
 
 # Received messages from subscriptions will be delivered to this callback
 def sub_cb(topic, msg):
@@ -21,14 +21,14 @@ def sub_cb(topic, msg):
     try:
 
         if( msg is not None ):
-            img = ujson.loads(msg)
+            img = ujson.loads(msg)       # parse the given message stream, interpreting it as a JSON string and deserialising the data to a Python object
 
             if (img is not None) and (img["height"] <= cols) and (img["width"] <= rows):
                 for i in range(n):
                     pixel = [ (img["data"][i][0] >> 1), (img["data"][i][1] >> 1), (img["data"][i][2] >>  1) ]
-                    np[i] = pixel
+                    np[i] = pixel       # set every pixels to the colour of the imagepixels in the JSON object
 
-            np.write()
+            np.write()          # write data to all pixels
 
             print( topic + '\t' +  ujson.dumps(msg) )
 
@@ -41,8 +41,8 @@ def sub_cb(topic, msg):
 
 def main(server="dompfaf"):
 
-    c = MQTTClient("umqtt_client", server)
-    c.set_callback(sub_cb)
+    c = MQTTClient("umqtt_client", server)      # instantiate an MQTTClient object
+    c.set_callback(sub_cb)                      # subscribed messages will be delivered to this callback
     c.connect()
     c.subscribe(b"image")
 
