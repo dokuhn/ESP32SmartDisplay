@@ -7,6 +7,8 @@ from neopixel import NeoPixel
 import ujson
 import uio
 
+import font_cfg
+
 
 rows = 10
 cols = 10
@@ -14,6 +16,26 @@ n = (rows * cols)                # set the number of pixels in your strip
 
 pin = Pin(0, Pin.OUT)            # set GPIO0 to output to drive NeoPixels
 np = NeoPixel(pin, n)            # create NeoPixel driver on pin for n pixels
+
+
+def drawChar( char ):
+
+    for i in range(5):
+        line = font_cfg.font[ ord(char) ][i]
+
+        for j in range(8):
+            if( line & 1 ):
+                np[ (j*cols)+ i ] =  (16,16,16)
+            line = line >> 1
+
+    np.write()        
+
+
+def clearScreen():
+    for i in range( rows * cols):
+        np[i] = (0,0,0)
+
+    np.write()    
 
 # Received messages from subscriptions will be delivered to this callback
 def sub_cb(topic, msg):
@@ -45,6 +67,46 @@ def main(server="dompfaf"):
     c.set_callback(sub_cb)                      # subscribed messages will be delivered to this callback
     c.connect()
     c.subscribe(b"image")
+
+
+    while(True):
+
+        drawChar('A')
+
+        time.sleep(1)
+
+        clearScreen()
+
+        drawChar('i')
+
+        time.sleep(1)
+
+        clearScreen()
+
+        drawChar('l')
+
+        time.sleep(1)
+
+        clearScreen()
+
+        drawChar('e')
+
+        time.sleep(1)
+
+        clearScreen()
+
+        drawChar('e')
+
+        time.sleep(1)
+
+        clearScreen()
+
+        drawChar('n')
+
+        time.sleep(1)
+
+        clearScreen()
+
 
     while True:
         if True:
