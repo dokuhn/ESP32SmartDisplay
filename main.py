@@ -24,17 +24,17 @@ def sub_cb(topic, msg):
 
     try:
 
-        if( msg is not None ):
+        if(msg is not None):
             img = ujson.loads(msg)       # parse the given message stream, interpreting it as a JSON string and deserialising the data to a Python object
 
             if (img is not None) and (img["height"] <= cols) and (img["width"] <= rows):
                 for i in range(n):
-                    pixel = [ (img["data"][i][0] >> 1), (img["data"][i][1] >> 1), (img["data"][i][2] >>  1) ]
+                    pixel = [(img["data"][i][0] >> 1), (img["data"][i][1] >> 1), (img["data"][i][2] >>  1)]
                     np[i] = pixel       # set every pixels to the colour of the imagepixels in the JSON object
 
             np.write()          # write data to all pixels
 
-            print( topic + '\t' +  ujson.dumps(msg) )
+            print(topic + '\t' +  ujson.dumps(msg))
 
     except ValueError as e:
 
@@ -49,42 +49,42 @@ def main(server="dompfaf"):
     c.set_callback(sub_cb)                      # subscribed messages will be delivered to this callback
     c.connect()
     c.subscribe(b"image")
-
-    x =  libGFX.gfx( np, rows, cols )
+     
+    x = libGFX.gfx(np, rows, cols)
 
     while(True):
 
-        x.drawChar('A', (16,0,0))
+        x.drawChar('A', (16, 0, 0))
 
         time.sleep(1)
 
         x.clearScreen()
 
-        x.drawChar('i', (16,0,0))
+        x.drawChar('i', (16, 0, 0))
 
         time.sleep(1)
 
         x.clearScreen()
 
-        x.drawChar('l', (16,0,0))
+        x.drawChar('l', (16, 0, 0))
 
         time.sleep(1)
 
         x.clearScreen()
 
-        x.drawChar('e', (16,0,0))
+        x.drawChar('e', (16, 0, 0))
 
         time.sleep(1)
 
         x.clearScreen()
 
-        x.drawChar('e', (16,0,0))
+        x.drawChar('e', (16, 0, 0))
 
         time.sleep(1)
 
         x.clearScreen()
 
-        x.drawChar('n', (16,0,0))
+        x.drawChar('n', (16, 0, 0))
 
         time.sleep(1)
 

@@ -1,6 +1,8 @@
 [MASTER]
-# Loaded Stubs:  esp32-micropython-1.12.0 
-init-hook='import sys;sys.path[1:1]=["src/lib",".micropy/BradenM-micropy-stubs-3cc928b/frozen", ".micropy/BradenM-micropy-stubs-e1b8ce6/frozen", ".micropy/BradenM-micropy-stubs-3cc928b/stubs", ".micropy/ESP32",  ]'
+# Loaded Stubs:  esp32-1.14.0 
+init-hook='import sys;sys.path[1:1]=["src/lib",".micropy/esp32-1.14.0/frozen", ".micropy/esp32-1.14.0/stubs", ".micropy/SmartDisplay",  ]'
+
+ignored-modules=sys,network,webrepl
 
 [MESSAGES CONTROL]
 # Only show warnings with the listed confidence levels. Leave empty to show
