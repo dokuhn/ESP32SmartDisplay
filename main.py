@@ -90,6 +90,14 @@ def main(server="dompfaf"):
 
         x.clearScreen()
 
+        x.drawLine({'x':1, 'y':1}, {'x':8, 'y':1}, (16, 0, 0))
+
+        time.sleep(5)
+
+        x.clearScreen()
+
+
+
 
     while True:
         if True:
