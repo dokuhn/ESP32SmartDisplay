@@ -96,6 +96,11 @@ def main(server="dompfaf"):
 
         x.clearScreen()
 
+        x.drawRect({'x':2, 'y':3}, {'x':8, 'y':6}, (16, 0, 0))
+
+        time.sleep(5)
+
+        x.clearScreen()
 
 
 

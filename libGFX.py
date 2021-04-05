@@ -59,7 +59,7 @@ class gfx:
             ystep = -1
 
         yi = point0['y']
-        for xi in range(point0['x'], point1['x']):
+        for xi in range(point0['x'], point1['x'] + 1):
             if(steep):
                 self.drawPixel(yi, xi, color)
             else:
@@ -67,12 +67,19 @@ class gfx:
             err -= dy
 
             if(err < 0):
-                yi  += ystep
+                yi += ystep
                 err += dx
 
 
         self.np.write() 
 
+
+    def drawRect(self, point0, point1, color):
+
+        self.drawLine({'x':point0['x'], 'y':point0['y']}, {'x':point1['x'], 'y':point0['y']}, color)
+        self.drawLine({'x':point1['x'], 'y':point0['y']}, {'x':point1['x'], 'y':point1['y']}, color)
+        self.drawLine({'x':point1['x'], 'y':point1['y']}, {'x':point0['x'], 'y':point1['y']}, color)
+        self.drawLine({'x':point0['x'], 'y':point1['y']}, {'x':point0['x'], 'y':point0['y']}, color)
 
 
 
