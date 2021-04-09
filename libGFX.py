@@ -26,40 +26,40 @@ class gfx:
         time.sleep_ms(10)    
 
 
-    def drawLine(self, point0, point1, color):
-        steep = abs(point1['y'] - point0['y']) > abs(point1['x'] - point0['x'])
+    def drawLine(self, x0, y0, x1, y1, color):
+        steep = abs(y1 - y0) > abs(x1 - x0)
         if(steep):
             # swap points
-            t = point0['x']
-            point0['x'] = point0['y']
-            point0['y'] = t
+            t = x0
+            x0 = y0
+            y0 = t
 
-            t = point1['x']
-            point1['x'] = point1['y']
-            point1['y'] = t
-        if(point0['x'] > point1['x']):
+            t = x1
+            x1 = y1
+            y1 = t
+        if(x0> x1):
             # swap points
-            t = point0['x']
-            point0['x'] = point1['x']
-            point1['x'] = t
+            t = x0
+            x0= x1
+            x1 = t
 
-            t = point0['y']
-            point0['y'] = point1['y']
-            point1['y'] = t
+            t = y0
+            y0 = y1
+            y1 = t
 
 
-        dx = point1['x'] - point0['x']
-        dy = abs(point1['y'] - point0['y'])
+        dx = x1 - x0
+        dy = abs(y1 - y0)
         
         err = dx / 2
 
-        if(point0['y'] < point1['y']):
+        if(y0 < y1):
             ystep = 1
         else:
             ystep = -1
 
-        yi = point0['y']
-        for xi in range(point0['x'], point1['x'] + 1):
+        yi = y0
+        for xi in range(x0, x1 + 1):
             if(steep):
                 self.drawPixel(yi, xi, color)
             else:
@@ -74,16 +74,51 @@ class gfx:
         self.np.write() 
 
 
-    def drawRect(self, point0, point1, color):
+    def drawRect(self, x, y, w, h, color):
 
-        self.drawLine({'x':point0['x'], 'y':point0['y']}, {'x':point1['x'], 'y':point0['y']}, color)
-        self.drawLine({'x':point1['x'], 'y':point0['y']}, {'x':point1['x'], 'y':point1['y']}, color)
-        self.drawLine({'x':point1['x'], 'y':point1['y']}, {'x':point0['x'], 'y':point1['y']}, color)
-        self.drawLine({'x':point0['x'], 'y':point1['y']}, {'x':point0['x'], 'y':point0['y']}, color)
+        self.drawLine( x, y, x + w, y, color)
+        self.drawLine( x + w, y, x + w, y + h, color)
+        self.drawLine( x + w, y + h, x, y + h, color)
+        self.drawLine( x, y + h, x, y, color)
+       
+
+    def drawCircle(self, x0, y0, r, color):
+
+        f = 1 - r
+        ddF_x = 1
+        ddf_y = -2 * r
+
+        x = 0
+        y = r
+
+        self.drawPixel(x0, y0 + r, color)
+        self.drawPixel(x0, y0 - r, color)
+        self.drawPixel(x0 + r, y0, color)
+        self.drawPixel(x0 - r, y0, color)
+
+        while(x < y):
+
+            if(f >= 0):
+                y -= 1
+                ddf_y += 2
+                f += ddf_y
+
+            x += 1
+            ddF_x += 2
+            f += ddF_x
+
+            self.drawPixel(x0 + x, y0 + y, color)
+            self.drawPixel(x0 - x, y0 + y, color)
+            self.drawPixel(x0 + x, y0 - y, color)
+            self.drawPixel(x0 - x, y0 - y, color)
+            self.drawPixel(x0 + y, y0 + x, color)
+            self.drawPixel(x0 - y, y0 + x, color)
+            self.drawPixel(x0 + y, y0 - x, color)
+            self.drawPixel(x0 - y, y0 - x, color)
+
+        self.np.write() 
 
 
-
-    
     def drawChar(self, char, color):
 
         for i in range(5):
