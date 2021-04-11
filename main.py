@@ -90,24 +90,37 @@ def main(server="dompfaf"):
 
         x.clearScreen()
 
-        x.drawLine(1, 1, 8, 5, (16, 0, 0))
+        x.writeLine(1, 1, 8, 5, (16, 0, 0))
 
-        time.sleep(5)
-
-        x.clearScreen()
-
-        x.drawRect(2, 3, 2, 5, (16, 0, 0))
-
-        time.sleep(5)
+        time.sleep(2)
 
         x.clearScreen()
 
+        x.writeRect(2, 3, 4, 5, (16, 0, 0))
 
-        x.drawCircle(5, 5, 3, (16, 0, 0))
-
-        time.sleep(5)
+        time.sleep(2)
 
         x.clearScreen()
+
+        x.writeFillRect(2, 3, 4, 5, (16, 0, 0))
+
+        time.sleep(2)
+
+        x.clearScreen()
+
+
+        x.writeCircle(4, 4, 3, (16, 0, 0))
+
+        time.sleep(2)
+
+        x.clearScreen()
+
+        x.writeCircleHelper(4, 4, 3, 0x4 ,(16, 0, 0))
+
+        time.sleep(2)
+
+        x.clearScreen()
+
 
 
 

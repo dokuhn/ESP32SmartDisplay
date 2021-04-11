@@ -14,8 +14,13 @@ class gfx:
         self.COLS  = cols
 
 
+    def writePixel(self, x, y, color):
+        self.drawPixel(x, y, color)
+        selp.np.write()
+
+
     def drawPixel(self, x, y, color):
-        self.np[ x + (y* self.COLS) ] = color
+        self.np[ x + (y* self.COLS) ] = color           
 
 
     def clearScreen(self):
@@ -70,17 +75,61 @@ class gfx:
                 yi += ystep
                 err += dx
 
+    def drawFastVLine(self, x, y, h, color):
+        self.drawLine(x, y, x, y + h - 1, color)
 
-        self.np.write() 
+    def drawFastHLine(self, x, y, w, color):
+        self.drawLine(x, y, x + w - 1, y, color)
+
+
+    def writeFastVLine(self, x, y, h, color):
+        self.drawLine(x, y, x, y + h - 1, color)
+        self.np.write()
+        
+
+    def writeFastHLine(self, x, y, w, color):
+        self.drawLine(x, y, x + w - 1, y, color)
+        self.np.write()
+        
+
+    def writeLine(self, x0, y0, x1, y1, color):
+
+        if (x0 == x1):
+            if (y0 > y1):
+                # swap points
+                t = y0
+                y0 = y1
+                y1 = t
+            self.writeFastVLine(x0, y0, y1 - y0 + 1, color);
+        elif (y0 == y1):
+            if (x0 > x1):
+                # swap points
+                t = x0
+                x0 = x1
+                x1 = t                
+            self.writeFastHLine(x0, y0, x1 - x0 + 1, color);
+        else:
+            self.drawLine(x0, y0, x1, y1, color);
+            self.np.write()
+
+        
 
 
     def drawRect(self, x, y, w, h, color):
 
-        self.drawLine( x, y, x + w, y, color)
-        self.drawLine( x + w, y, x + w, y + h, color)
-        self.drawLine( x + w, y + h, x, y + h, color)
-        self.drawLine( x, y + h, x, y, color)
+        self.writeFastHLine(x, y, w, color)
+        self.writeFastHLine(x, y + h - 1, w, color)
+        self.writeFastVLine(x, y, h, color)
+        self.writeFastVLine(x + w - 1, y, h, color)
        
+    def writeRect(self, x, y, w, h, color):
+        self.drawRect(x, y, w, h, color)
+        self.np.write()
+
+    def writeFillRect(self, x, y, w, h, color):
+        for xi in range(x, x + w):
+            self.writeFastVLine(xi, y, h, color)
+
 
     def drawCircle(self, x0, y0, r, color):
 
@@ -116,8 +165,44 @@ class gfx:
             self.drawPixel(x0 + y, y0 - x, color)
             self.drawPixel(x0 - y, y0 - x, color)
 
-        self.np.write() 
+ 
+    def writeCircle(self, x0, y0, r, color):
+        self.drawCircle(x0, y0, r, color)
+        self.np.write()
 
+    def drawCircleHelper(self, x0, y0, r, cornername, color):
+        f = 1 - r
+        ddF_x = 1
+        ddF_y = -2 * r
+        x = 0
+        y = r
+
+        while(x < y):
+            if (f >= 0):
+                y -= 1
+                ddF_y += 2
+                f += ddF_y
+            
+            x += 1
+            ddF_x += 2
+            f += ddF_x
+            if (cornername & 0x4):
+                self.drawPixel(x0 + x, y0 + y, color)
+                self.drawPixel(x0 + y, y0 + x, color)
+            if (cornername & 0x2):
+                self.drawPixel(x0 + x, y0 - y, color)
+                self.drawPixel(x0 + y, y0 - x, color)
+            if (cornername & 0x8):
+                self.drawPixel(x0 - y, y0 + x, color)
+                self.drawPixel(x0 - x, y0 + y, color)
+            if (cornername & 0x1):
+                self.drawPixel(x0 - y, y0 - x, color)
+                self.drawPixel(x0 - x, y0 - y, color)
+            
+
+    def writeCircleHelper(self, x0, y0, r, cornername, color):
+        self.drawCircleHelper(x0, y0, r, cornername, color)
+        self.np.write()
 
     def drawChar(self, char, color):
 
