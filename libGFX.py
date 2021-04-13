@@ -204,6 +204,72 @@ class gfx:
         self.drawCircleHelper(x0, y0, r, cornername, color)
         self.np.write()
 
+    def drawfillCircleHelper(self, x0, y0, r, corners, delta, color):
+        f = 1 - r
+        ddF_x = 1
+        ddF_y = -2 * r
+        x = 0
+        y = r
+        px = x
+        py = y
+
+        delta += 1     # Avoid some +1's in the loop
+
+        while(x < y):
+            if (f >= 0):
+                y -= 1
+                ddF_y += 2
+                f += ddF_y
+            
+            x += 1
+            ddF_x += 2
+            f += ddF_x
+            # These checks avoid double-drawing certain lines
+            if (x < (y + 1)):
+                if (corners & 1):
+                    self.writeFastVLine(x0 + x, y0 - y, 2 * y + delta, color)
+                if (corners & 2):
+                    self.writeFastVLine(x0 - x, y0 - y, 2 * y + delta, color)
+            if (y != py):
+                if (corners & 1):
+                    self.writeFastVLine(x0 + py, y0 - px, 2 * px + delta, color)
+                if (corners & 2):
+                    self.writeFastVLine(x0 - py, y0 - px, 2 * px + delta, color)
+                py = y
+            px = x
+
+
+    def writefillCircleHelper(self, x0, y0, r, corners, delta, color):
+        self.drawfillCircleHelper(self, x0, y0, r, corners, delta, color)
+        self.np.write()
+
+
+    def writefillRoundRect(self, x, y, w, h, r, color):
+        max_radius = (w if (w < h) else h) / 2  # 1/2 minor axis
+
+        if (r > max_radius):
+            r = max_radius
+
+        self.writeFillRect(x + r, y, w - 2 * r, h, color)
+
+        self.drawfillCircleHelper(x + w - r - 1, y + r, r, 1, h - 2 * r - 1, color)
+        self.drawfillCircleHelper(x + r, y + r, r, 2, h - 2 * r - 1, color)
+
+        self.np.write()
+
+
+    def drawTriangle(self, x0, y0, x1, y1, x2, y2, color):
+
+        self.drawLine(x0, y0, x1, y1, color)
+        self.drawLine(x1, y1, x2, y2, color)
+        self.drawLine(x2, y2, x0, y0, color)
+
+
+    def writeTriangle(self, x0, y0, x1, y1, x2, y2, color):
+        self.drawTriangle(x0, y0, x1, y1, x2, y2, color)
+        self.np.write()
+
+
     def drawChar(self, char, color):
 
         for i in range(5):

@@ -121,8 +121,18 @@ def main(server="dompfaf"):
 
         x.clearScreen()
 
+        x.writefillRoundRect(2, 3, 4, 5, 1, (16, 0, 0))
+
+        time.sleep(2)
+
+        x.clearScreen()
 
 
+        x.writeTriangle(5, 0, 8, 8, 1, 8, (16, 0, 0))
+
+        time.sleep(2)
+
+        x.clearScreen()
 
     while True:
         if True:
