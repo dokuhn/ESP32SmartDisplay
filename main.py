@@ -134,6 +134,15 @@ def main(server="dompfaf"):
 
         x.clearScreen()
 
+        x.drawfillTriangle(4, 1, 7, 7, 1, 7, (16, 0, 0))
+
+        np.write()
+
+        time.sleep(2)
+
+        x.clearScreen()
+
+
     while True:
         if True:
             # Blocking wait for message
