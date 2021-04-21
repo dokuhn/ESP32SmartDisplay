@@ -5,13 +5,13 @@ import font_cfg
 
 class gfx:
 
-    ROWS    = 10  
-    COLS    = 10 
+    ROWS = 10
+    COLS = 10
 
     def __init__(self, NeoPixelInst, rows, cols):
-        self.np    = NeoPixelInst
-        self.ROWS  = rows
-        self.COLS  = cols
+        self.np = NeoPixelInst
+        self.ROWS = rows
+        self.COLS = cols
 
 
     def writePixel(self, x, y, color):
@@ -20,15 +20,15 @@ class gfx:
 
 
     def drawPixel(self, x, y, color):
-        self.np[ x + (y* self.COLS) ] = color           
+        self.np[x + (y* self.COLS)] = color
 
 
     def clearScreen(self):
-        for i in range( self.ROWS * self.COLS):
-            self.np[i] = (0,0,0)
+        for i in range(self.ROWS * self.COLS):
+            self.np[i] = (0, 0, 0)
         
         self.np.write()
-        time.sleep_ms(10)    
+        time.sleep_ms(10)
 
 
     def drawLine(self, x0, y0, x1, y1, color):
@@ -42,10 +42,10 @@ class gfx:
             t = x1
             x1 = y1
             y1 = t
-        if(x0> x1):
+        if(x0 > x1):
             # swap points
             t = x0
-            x0= x1
+            x0 = x1
             x1 = t
 
             t = y0
@@ -74,6 +74,7 @@ class gfx:
             if(err < 0):
                 yi += ystep
                 err += dx
+
 
     def drawFastVLine(self, x, y, h, color):
         self.drawLine(x, y, x, y + h - 1, color)
@@ -333,8 +334,8 @@ class gfx:
             last = y1 - 1 # Skip it
 
         for y in range(y0, last):
-            a = int(x0 + sa / dy01)
-            b = int(x0 + sb / dy02)
+            a = int(x0 + (sa / dy01))
+            b = int(x0 + (sb / dy02))
             sa += dx01
             sb += dx02
             ## longhand:
@@ -352,8 +353,8 @@ class gfx:
         sa = int(dx12 * (y - y1))
         sb = int(dx02 * (y - y0))
         for y in range(last, y2):
-            a = x1 + sa / dy12
-            b = x0 + sb / dy02
+            a = x1 + (sa / dy12)
+            b = x0 + (sb / dy02)
             sa += dx12
             sb += dx02
             ## longhand:
@@ -378,7 +379,7 @@ class gfx:
                     self.drawPixel(i, j, color)
                 line = line >> 1
 
-        self.np.write()        
+        self.np.write()    
 
 
         

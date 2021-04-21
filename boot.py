@@ -15,6 +15,13 @@ def do_connect():
     print('network config:', sta_if.ifconfig())                 # get the interface's IP/netmask/gw/DNS addresses and print them to the console
 
 
+def show_ascii_startup_logo():
+    with open('ESP32SmartDisplayLogo.txt','r') as startupLogoFile:
+        startupLogoStr = startupLogoFile.read()
+    print(startupLogoStr)
+
+
+show_ascii_startup_logo()
 
 do_connect()
 
