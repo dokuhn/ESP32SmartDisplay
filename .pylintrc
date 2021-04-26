@@ -1,8 +1,8 @@
 [MASTER]
 # Loaded Stubs:  esp32-1.14.0 
-init-hook='import sys;sys.path[1:1]=["src/lib",".micropy/esp32-1.14.0/frozen", ".micropy/esp32-1.14.0/stubs", ".micropy/SmartDisplay",  ]'
+init-hook='import sys;sys.path[1:1]=["src/lib",".micropy/esp32-1.14.0/frozen", ".micropy/esp32-1.14.0/stubs", ".micropy/SmartDisplay" ]'
 
-ignored-modules=sys,network,webrepl
+ignored-modules=sys,network,webrepl,time
 
 [MESSAGES CONTROL]
 # Only show warnings with the listed confidence levels. Leave empty to show
@@ -19,6 +19,6 @@ confidence=
 # no Warning level messages displayed, use "--disable=all --enable=classes
 # --disable=W".
 
-disable = missing-docstring, line-too-long, trailing-newlines, broad-except, logging-format-interpolation, invalid-name, empty-docstring,
+disable = missing-docstring, line-too-long, trailing-newlines, trailing-whitespace, broad-except, logging-format-interpolation, invalid-name, empty-docstring,
         no-method-argument, assignment-from-no-return, too-many-function-args, unexpected-keyword-arg
         # the 2nd  line deals with the limited information in the generated stubs.

@@ -1,5 +1,4 @@
 import time
-
 import font_cfg
 
 
@@ -12,14 +11,28 @@ class gfx:
         self.np = NeoPixelInst
         self.ROWS = rows
         self.COLS = cols
-
+        
 
     def writePixel(self, x, y, color):
+
+        """write a pixel, overwrite in subclasses if startWrite is defined!
+        :param x:   x coordinate
+        :param y:   y coordinate
+        :param color: Tuple of three integers between 0 and 255 to be fill with
+
+        """
         self.drawPixel(x, y, color)
         self.np.write()
 
 
     def drawPixel(self, x, y, color):
+
+        """draw a pixel, overwrite in subclasses if startWrite is defined!
+        :param x:   x coordinate
+        :param y:   y coordinate
+        :param color: Tuple of three integers between 0 and 255 to be fill with
+
+        """
         self.np[x + (y* self.COLS)] = color
 
 
@@ -32,6 +45,25 @@ class gfx:
 
 
     def drawLine(self, x0, y0, x1, y1, color):
+
+        """Write a line.  Bresenham's algorithm - thx wikpedia.
+
+        :param x0: Start point x coordinate
+        :type x0: int
+        :param y0: Start point y coordinate
+        :type y0: int
+        :param x1: End point x coordinate
+        :type x1: int
+        :param y1: End point y coordinate
+        :type y1: int
+        :param color: Tuple of three integers between 0 and 255 to be fill with
+        :type color: (int,int,int)
+        :return: returns nothing
+        
+
+        """
+
+
         steep = abs(y1 - y0) > abs(x1 - x0)
         if(steep):
             # swap points
@@ -82,13 +114,32 @@ class gfx:
     def drawFastHLine(self, x, y, w, color):
         self.drawLine(x, y, x + w - 1, y, color)
 
-
     def writeFastVLine(self, x, y, h, color):
+
+        """Write a perfectly vertical line, overwrite in subclasses if startWrite is defined!
+
+        :param x: Top-most x coordinate
+        :param y: Top-most y coordinate
+        :param h: Height in pixels
+        :param color: Tuple of three integers between 0 and 255 to be fill with
+
+        """
+
         self.drawLine(x, y, x, y + h - 1, color)
         self.np.write()
         
 
     def writeFastHLine(self, x, y, w, color):
+
+        """Write a perfectly horizontal line, overwrite in subclasses if startWrite is defined!
+        
+        :param x: Left-most x coordinate
+        :param y: Left-most y coordinate
+        :param w: Width in pixels
+        :param color: Tuple of three integers between 0 and 255 to be fill with
+
+        """
+
         self.drawLine(x, y, x + w - 1, y, color)
         self.np.write()
         
@@ -128,6 +179,15 @@ class gfx:
         self.np.write()
 
     def writeFillRect(self, x, y, w, h, color):
+        """Write a rectangle completely with one color, overwrite in subclasses if startWrite is defined!
+
+        :param x: Top left corner x coordinate
+        :param y: Top left corner y coordinate
+        :param w: Width in pixels
+        :param h: Height in pixels
+        :param color: Tuple of three integers between 0 and 255 to be fill with
+
+        """
         for xi in range(x, x + w):
             self.writeFastVLine(xi, y, h, color)
 
