@@ -8,6 +8,7 @@
     "python.analysis.typeshedPaths":  [".micropy/esp32-1.14.0/frozen", ".micropy/esp32-1.14.0/stubs", ".micropy/SmartDisplay"],
 
     "python.linting.pylintEnabled": true,
+    "python.linting.pydocstyleEnabled": true,
     "python.languageServer": "Microsoft",
     "python.pythonPath": "/usr/bin/python3"
 }

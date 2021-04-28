@@ -115,7 +115,7 @@ def main(server="dompfaf"):
 
         x.clearScreen()
 
-        x.writeCircleHelper(4, 4, 3, 0x4 ,(16, 0, 0))
+        x.writeCircleHelper(4, 4, 3, 0x4, (16, 0, 0))
 
         time.sleep(2)
 
@@ -143,7 +143,8 @@ def main(server="dompfaf"):
         x.clearScreen()
 
 
-    while True:
+
+    while(True):
         if True:
             # Blocking wait for message
             c.wait_msg()
