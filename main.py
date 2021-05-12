@@ -1,3 +1,10 @@
+# @author Dominik Kuhn
+# @mail dominik.kuhn90@googlemail.com
+# @create date 2021-02-16 17:05:40
+# @modify date 2021-05-11 10:55:23
+# @desc [description]
+
+
 import time
 import sys
 
@@ -19,9 +26,9 @@ pin = Pin(0, Pin.OUT)            # set GPIO0 to output to drive NeoPixels
 np = NeoPixel(pin, n)            # create NeoPixel driver on pin for n pixels
 
 
-# Received messages from subscriptions will be delivered to this callback
-def sub_cb(topic, msg):
 
+def sub_cb(topic, msg):
+    """Received messages from subscriptions will be delivered to this callback."""
     try:
 
         if(msg is not None):

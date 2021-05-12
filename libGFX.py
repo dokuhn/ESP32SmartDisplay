@@ -1,3 +1,9 @@
+# @author Dominik Kuhn
+# @mail dominik.kuhn90@googlemail.com
+# @create date 2021-02-16 17:05:40
+# @modify date 2021-05-11 10:55:23
+# @desc [description]
+
 import time
 import font_cfg
 
@@ -8,7 +14,7 @@ class gfx:
     ROWS = 10
     COLS = 10
 
-    def __init__(self, NeoPixelInst, rows, cols):
+    def __init__(self, NeoPixelInst, rows=10, cols=10):
         """
         Instatiate a GFX context for graphics.
 
@@ -583,6 +589,14 @@ class gfx:
             self.drawFastHLine(a, y, b - a + 1, color)
         
 
+
+    def getPixelColor(self, x, y):
+        """Get the pixel color value at a given, unrotated coordinate."""
+        if((x < 0) or (y < 0) or (x >= self.ROWS) or (y >= self.COLS)):
+            return 0
+        if(len(self.np) >= 0):
+            return self.np[x + (y* self.COLS)]
+        return 0
 
 
     def drawChar(self, char, color):
